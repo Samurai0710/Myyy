@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отзывы - КрутоРоллы Михайловск</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        header {
+            background-color: #ff6f61;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        header span {
+            font-size: 1em;
+        }
+        main {
+            padding: 20px;
+        }
+        .welcome {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .welcome h2 {
+            margin-bottom: 10px;
+        }
+        .review-form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .review-form:hover {
+            transform: scale(1.02);
+        }
+        .review-form input, .review-form textarea, .review-form button {
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .review-form button {
+            background-color: #ff6f61;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .review-form button:hover {
+            background-color: #e65a50;
+        }
+        .reviews {
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        .review {
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .review img {
+            max-width: 50px;
+            max-height: 50px;
+            border-radius: 50%;
+        }
+        .review p {
+            margin: 0;
+        }
+        @media (max-width: 768px) {
+            .review-form, .reviews {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>КрутоРоллы <span>Михайловск</span></h1>
+    </header>
+    <main>
+        <div class="welcome">
+            <h2>Спасибо Вам за заказ и отзыв</h2>
+            <p>Мы ценим ваше мнение и время!</p>
+        </div>
+        <div class="review-form">
+            <h3>Оставить отзыв</h3>
+            <form id="reviewForm">
+                <input type="text" id="name" placeholder="Ваше имя" required>
+                <input type="password" id="password" placeholder="Пароль" required>
+                <textarea id="reviewText" placeholder="Ваш отзыв (макс. 300 символов)" maxlength="300" required></textarea>
+                <input type="file" id="reviewImage" accept="image/*">
+                <button type="submit">Отправить отзыв</button>
+            </form>
+        </div>
+        <div class="reviews">
+            <h3>Отзывы:</h3>
+            <div class="review">
+                <img src="https://via.placeholder.com/50" alt="User image">
+                <p><strong>Имя:</strong> Это пример отзыва.</p>
+            </div>
+        </div>
+    </main>
+</body>
+<script>
+    document.getElementById('reviewForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const password = document.getElementById('password').value;
+        const reviewText = document.getElementById('reviewText').value;
+        const reviewImage = document.getElementById('reviewImage').files[0];
+
+        if (password !== '111999') {
+            alert('Неверный пароль!');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function() {
+            const reviewsContainer = document.querySelector('.reviews');
+
+            const reviewElement = document.createElement('div');
+            reviewElement.className = 'review';
+
+            const imgElement = document.createElement('img');
+            imgElement.src = reviewImage ? reader.result : 'https://via.placeholder.com/50';
+            reviewElement.appendChild(imgElement);
+
+            const textElement = document.createElement('p');
+            textElement.innerHTML = `<strong>${name}:</strong> ${reviewText}`;
+            reviewElement.appendChild(textElement);
+
+            reviewsContainer.appendChild(reviewElement);
+        };
+
+        if (reviewImage) {
+            reader.readAsDataURL(reviewImage);
+        } else {
+            reader.onload();
+        }
+
+        document.getElementById('reviewForm').reset();
+    });
+</script>
+</html>
